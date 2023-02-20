@@ -11,5 +11,5 @@ app_name - **must be** _mobile_,_web_ or _admin_
 
 **file max is 20MB**
 
-![Screenshot from 2023-02-20 13-09-33.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-02-20%2013-09-33.png)
 
+![image](https://user-images.githubusercontent.com/92877850/220053909-5062d03d-076f-41e9-92be-62f3a807163b.png)
