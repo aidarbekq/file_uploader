@@ -5,9 +5,13 @@
   
 
 
-**POST`http://localhost:4401/in/{app_name}/{account_id}`**
+**POST`http://localhost:4401/in/{app_name}/{account_id}`**  
+app_name - **must be** _mobile_,_web_ or _admin_  
 
-app_name - **must be** _mobile_,_web_ or _admin_
+
+while posting in the request header, set the "Content-Type" header to "multipart/form-data" by clicking on the "Headers" tab below the request URL field, and then adding a new header with the key "Content-Type" and the value "multipart/form-data".  
+Then in form-data set to key "file" and for for value select file.  
+
 
 **file max is 20MB**
 
