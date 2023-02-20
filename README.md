@@ -1,50 +1,15 @@
-### two-endpoints
+# file_uploader
+
+**server port is 4041**  
+  
+  
 
 
-This project has two endpoints for managing payment links: _parse-link_ and _create-link_.
+**POST`http://localhost:4401/in/{app_name}/{account_id}`**
 
+app_name - **must be** _mobile_,_web_ or _admin_
 
-**server port is 8081**
+**file max is 20MB**
 
-Endpoints:
+![Screenshot from 2023-02-20 13-09-33.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-02-20%2013-09-33.png)
 
-
-**POST /parse-link**  
-`http://localhost:8081/parse-link`  
-_json payload_:  
-`
-{
-"paymentLink": "link"
-}
-`
-
-**POST /create-link**  
-`http://localhost:8081/create-link`
-
-_json payload_ :  
-`
-{
-"standardVersion": "",
-"typeOfPaymentLink": "",
-"informationAboutServiceProvider": "",
-"mcc": "",
-"currencyCode": "",
-"paymentAmount": "",
-"providerName": "",
-"dataChecksum": ""
-}
-`
-
-example:   
-`
-{
-"standardVersion": "01",
-"typeOfPaymentLink": "11",
-"informationAboutServiceProvider": "320010balance.kg100512345120211130211-330003521",
-"mcc": "6012",
-"currencyCode": "417",
-"paymentAmount": "56100",
-"providerName": "balance.kg",
-"dataChecksum": "d271"
-}
-`
