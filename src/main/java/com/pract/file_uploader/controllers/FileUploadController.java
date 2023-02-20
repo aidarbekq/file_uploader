@@ -1,6 +1,6 @@
 package com.pract.file_uploader.controllers;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.pract.file_uploader.service.FileUploadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,25 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 public class FileUploadController {
 
-    @Value("${custom.basedir}")
-    private String baseDir;
+    private final FileUploadService fileUploadService;
 
-    @Value("${custom.apps}")
-    private List<String> appNames;
-
+    public FileUploadController(FileUploadService fileUploadService) {
+        this.fileUploadService = fileUploadService;
+    }
 
     @PostMapping("/in/{app_name}/{account_id}")
     public ResponseEntity<String> uploadFile(
@@ -35,27 +25,11 @@ public class FileUploadController {
             @PathVariable("account_id") String accountId,
             @RequestParam("file") MultipartFile file) {
 
-        if (!appNames.contains(appName)) {
-            return ResponseEntity.badRequest().body("Invalid app name");
-        }
-
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File is empty");
-        }
-
-        String fileName = file.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString();
-        String date = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
-        String filePath = String.format("%s/%s/%s/%s_%s", baseDir, appName, date, accountId, uuid);
-        Path uploadPath = Paths.get(filePath);
-        System.out.println("filename: " + fileName);
-        System.out.println("filepath: " + filePath);
-        System.out.println("path_parent: " + Paths.get(filePath).getParent());
-
-        try (InputStream inputStream = file.getInputStream()){
-            Files.createDirectories(Paths.get(filePath));
-            Files.copy(inputStream, uploadPath, StandardCopyOption.REPLACE_EXISTING);
+        try {
+            fileUploadService.uploadFile(appName, accountId, file);
             return ResponseEntity.ok("File uploaded");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
