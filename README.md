@@ -13,7 +13,7 @@ while posting in the request header, set the "Content-Type" header to "multipart
 Then in form-data set to key "file" and for for value select file.  
 
 
-**file max is 20MB**
+**file max size is 20MB**
 
 
 ![image](https://user-images.githubusercontent.com/92877850/220053909-5062d03d-076f-41e9-92be-62f3a807163b.png)
